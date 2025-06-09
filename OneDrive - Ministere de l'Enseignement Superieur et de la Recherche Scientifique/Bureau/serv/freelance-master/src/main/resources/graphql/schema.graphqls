@@ -1,0 +1,124 @@
+# Enums
+enum NiveauCompetence {
+  DEBUTANT
+  INTERMEDIAIRE
+  AVANCE
+  EXPERT
+}
+
+enum TypeLien {
+  LINKEDIN
+  GITHUB
+  PORTFOLIO
+  BEHANCE
+  DRIBBBLE
+  WEBSITE
+  AUTRE
+}
+
+# Types
+type Freelance {
+  id: ID!
+  nom: String!
+  prenom: String!
+  email: String!
+  telephone: String
+  bio: String
+  ville: String
+  tarifHoraire: Float
+  disponible: Boolean!
+  competences: [Competence!]!
+  liens: [LienProfessionnel!]!
+}
+
+type Competence {
+  id: ID!
+  nom: String!
+  niveau: NiveauCompetence!
+  anneesExperience: Int
+  freelance: Freelance!
+}
+
+type LienProfessionnel {
+  id: ID!
+  type: TypeLien!
+  url: String!
+  titre: String
+  freelance: Freelance!
+}
+
+# Queries
+type Query {
+  # Récupérer tous les freelances
+  freelances: [Freelance!]!
+
+  # Récupérer un freelance par ID
+  freelance(id: ID!): Freelance
+
+  # Récupérer les freelances disponibles
+  freelancesDisponibles: [Freelance!]!
+
+  # Rechercher par ville
+  freelancesByVille(ville: String!): [Freelance!]!
+
+  # Rechercher par compétence
+  freelancesByCompetence(competence: String!): [Freelance!]!
+
+  # Récupérer toutes les compétences
+  competences: [Competence!]!
+
+  # Récupérer tous les liens professionnels
+  liens: [LienProfessionnel!]!
+}
+
+# Mutations
+type Mutation {
+  # Créer un nouveau freelance
+  createFreelance(
+    nom: String!
+    prenom: String!
+    email: String!
+    telephone: String
+    bio: String
+    ville: String
+    tarifHoraire: Float
+  ): Freelance
+
+  # Mettre à jour un freelance
+  updateFreelance(
+    id: ID!
+    nom: String
+    prenom: String
+    email: String
+    telephone: String
+    bio: String
+    ville: String
+    tarifHoraire: Float
+    disponible: Boolean
+  ): Freelance
+
+  # Supprimer un freelance
+  deleteFreelance(id: ID!): Boolean!
+
+  # Ajouter une compétence à un freelance
+  addCompetence(
+    freelanceId: ID!
+    nom: String!
+    niveau: NiveauCompetence!
+    anneesExperience: Int
+  ): Competence
+
+  # Ajouter un lien professionnel à un freelance
+  addLienProfessionnel(
+    freelanceId: ID!
+    type: TypeLien!
+    url: String!
+    titre: String
+  ): LienProfessionnel
+
+  # Supprimer une compétence
+  deleteCompetence(id: ID!): Boolean!
+
+  # Supprimer un lien professionnel
+  deleteLienProfessionnel(id: ID!): Boolean!
+}
