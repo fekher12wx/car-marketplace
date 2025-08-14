@@ -2,7 +2,6 @@
 
 A modern car marketplace application for buying and selling vehicles online.
 
-![Car Marketplace](https://via.placeholder.com/800x200/4f46e5/ffffff?text=Car+Marketplace)
 
 ## ✨ Features
 
